@@ -1,0 +1,10 @@
+.git
+.idea
+.smarttomcat
+src
+target
+pom.xml
+*.iml
+*.md
+Dockerfile
+.dockerignore
