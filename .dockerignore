@@ -2,7 +2,6 @@
 .idea
 .smarttomcat
 src
-target
 pom.xml
 *.iml
 *.md
