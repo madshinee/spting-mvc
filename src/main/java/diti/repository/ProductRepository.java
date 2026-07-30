@@ -1,15 +1,14 @@
 package diti.repository;
 
+
 import diti.entity.Produit;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProductRepository {
-    void save(Produit product);
+public interface ProductRepository extends JpaRepository<Produit, Long > {
 
-    List<Produit> findAll();
+        List<Produit> findByLibelle(String libelle);
 
-    Produit findById(Long id);
-
-    void delete(Long id);
+        List<Produit> findByLibelleContainingAndPrixGreaterThan(String libelle, double prix);
 }

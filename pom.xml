@@ -29,9 +29,9 @@
     </dependency>
     <!-- JPA -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>5.3.30</version>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>2.7.18</version>
     </dependency>
 
     <!-- Hibernate -->
@@ -74,6 +74,7 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.18.2</version> <!-- Remplacez par la version stable souhaitée -->
     </dependency>
+
   </dependencies>
   <build>
     <finalName>diti4_spring_mvc</finalName>
