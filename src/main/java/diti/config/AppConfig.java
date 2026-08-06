@@ -1,6 +1,7 @@
 package diti.config;
 
 import org.springframework.context.annotation.*;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.*;
 import org.springframework.orm.jpa.vendor.*;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -12,6 +13,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "diti.repository")
 public class AppConfig {
 
     @Bean

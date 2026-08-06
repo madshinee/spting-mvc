@@ -48,7 +48,7 @@ public class ProduitController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        Produit produit =  productService.findById(id);
+        Produit produit =  productService.findById(id).get();
         model.addAttribute("produit", produit);
         return "form-product";
     }
