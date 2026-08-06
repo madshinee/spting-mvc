@@ -8,6 +8,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 @Configuration
@@ -16,12 +17,12 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class AppConfig {
 
     @Bean
-    public BasicDataSource dataSource() {
+    public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/diti4_spring_mvc?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true");
+        ds.setUrl("jdbc:mysql://localhost:3306/diti4_spring_mvc");
         ds.setUsername("root");
-        ds.setPassword("madmad@00"); // adapte selon ton installation
+        ds.setPassword("madmad@00");
 
         System.out.println("DATASOURCE");
 
@@ -43,10 +44,10 @@ public class AppConfig {
 
         // options Hibernate (important pour MySQL)
         java.util.Properties props = new java.util.Properties();
-        props.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        props.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         props.put("hibernate.hbm2ddl.auto", "update");
         props.put("hibernate.show_sql", "true");
-        
+
 
         em.setJpaProperties(props);
         System.out.println("Entity manager ");
