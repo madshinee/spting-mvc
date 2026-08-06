@@ -2,6 +2,7 @@ package diti.service.impl;
 
 
 import diti.entity.Produit;
+import diti.entity.TypeProduit;
 import diti.repository.ProductRepository;
 import diti.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Produit> findByTypeProduit(TypeProduit typeProduit) {
+        return repository.findByTypeProduit(typeProduit);
     }
 }

@@ -2,7 +2,9 @@ package diti.REST;
 
 
 import diti.entity.Produit;
+import diti.entity.TypeProduit;
 import diti.service.ProductService;
+import diti.service.TypeProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,20 @@ public class ProduitRestController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private TypeProduitService typeProduitService;
+
 
     @GetMapping
     public List<Produit>  getList(){
         List<Produit>  produits =  productService.findAll();
         return produits;
+    }
+
+    @GetMapping("/type/{typeId}")
+    public List<Produit> getListByType(@PathVariable Long typeId){
+        TypeProduit typeProduit = typeProduitService.findById(typeId);
+        return productService.findByTypeProduit(typeProduit);
     }
 
     @PostMapping

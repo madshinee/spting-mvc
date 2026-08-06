@@ -7,8 +7,7 @@ import org.springframework.orm.jpa.vendor.*;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
+import jakarta.persistence.EntityManagerFactory;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 @Configuration
@@ -17,12 +16,12 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class AppConfig {
 
     @Bean
-    public DataSource dataSource() {
+    public BasicDataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:5432/diti4_pring_mvc");
-        ds.setUsername("postgres");
-        ds.setPassword("passer"); // adapte selon ton installation
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://localhost:3306/diti4_spring_mvc?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true");
+        ds.setUsername("root");
+        ds.setPassword("madmad@00"); // adapte selon ton installation
 
         System.out.println("DATASOURCE");
 
@@ -42,9 +41,9 @@ public class AppConfig {
 
         em.setJpaVendorAdapter(vendorAdapter);
 
-        // options Hibernate (important pour PostgreSQL)
+        // options Hibernate (important pour MySQL)
         java.util.Properties props = new java.util.Properties();
-        props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        props.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         props.put("hibernate.hbm2ddl.auto", "update");
         props.put("hibernate.show_sql", "true");
         

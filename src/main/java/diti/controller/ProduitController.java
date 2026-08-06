@@ -2,7 +2,9 @@ package diti.controller;
 
 
 import diti.entity.Produit;
+import diti.entity.TypeProduit;
 import diti.service.ProductService;
+import diti.service.TypeProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ public class ProduitController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private TypeProduitService typeProduitService;
+
 
     @GetMapping
     public String getList(Model model){
@@ -26,14 +31,29 @@ public class ProduitController {
         return "produit";
     }
 
+    @GetMapping("/type/{typeId}")
+    public String getListByType(@PathVariable Long typeId, Model model){
+        TypeProduit typeProduit = typeProduitService.findById(typeId);
+        List<Produit> produits = productService.findByTypeProduit(typeProduit);
+        model.addAttribute("produits", produits);
+        model.addAttribute("selectedType", typeProduit);
+        return "produit";
+    }
+
 
     @GetMapping("/new")
-    public String form(){
+    public String form(Model model){
+        List<TypeProduit> types = typeProduitService.findAll();
+        model.addAttribute("types", types);
         return "form-product";
     }
 
     @PostMapping
-    public String save(@ModelAttribute Produit produit){
+    public String save(@ModelAttribute Produit produit, @RequestParam(required = false) Long typeProduitId){
+        if(typeProduitId != null) {
+            TypeProduit typeProduit = typeProduitService.findById(typeProduitId);
+            produit.setTypeProduit(typeProduit);
+        }
         productService.save(produit);
         return "redirect:/produit";
     }
@@ -49,7 +69,9 @@ public class ProduitController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
         Produit produit =  productService.findById(id).get();
+        List<TypeProduit> types = typeProduitService.findAll();
         model.addAttribute("produit", produit);
+        model.addAttribute("types", types);
         return "form-product";
     }
 

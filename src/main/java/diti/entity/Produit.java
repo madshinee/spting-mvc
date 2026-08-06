@@ -1,7 +1,7 @@
 package diti.entity;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -15,13 +15,18 @@ public class Produit {
 
     private double prix;
 
+    @ManyToOne
+    @JoinColumn(name = "type_produit_id")
+    private TypeProduit typeProduit;
+
     public Produit() {
     }
 
-    public Produit(Long id, String libelle, double prix) {
+    public Produit(Long id, String libelle, double prix, TypeProduit typeProduit) {
         this.id = id;
         this.libelle = libelle;
         this.prix = prix;
+        this.typeProduit = typeProduit;
     }
 
     public Long getId() {
@@ -48,12 +53,21 @@ public class Produit {
         this.prix = prix;
     }
 
+    public TypeProduit getTypeProduit() {
+        return typeProduit;
+    }
+
+    public void setTypeProduit(TypeProduit typeProduit) {
+        this.typeProduit = typeProduit;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", libelle='" + libelle + '\'' +
                 ", prix=" + prix +
+                ", typeProduit=" + (typeProduit != null ? typeProduit.getLibelle() : "null") +
                 '}';
     }
 }
