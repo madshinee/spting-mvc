@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TypeProduitServiceImpl implements TypeProduitService {
@@ -15,8 +16,8 @@ public class TypeProduitServiceImpl implements TypeProduitService {
     private TypeProduitRepository repository;
 
     @Override
-    public void save(TypeProduit typeProduit) {
-        repository.save(typeProduit);
+    public TypeProduit save(TypeProduit typeProduit) {
+        return repository.save(typeProduit);
     }
 
     @Override
@@ -25,12 +26,12 @@ public class TypeProduitServiceImpl implements TypeProduitService {
     }
 
     @Override
-    public TypeProduit findById(Long id) {
+    public Optional<TypeProduit> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

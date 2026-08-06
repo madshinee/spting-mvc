@@ -33,7 +33,7 @@ public class ProduitController {
 
     @GetMapping("/type/{typeId}")
     public String getListByType(@PathVariable Long typeId, Model model){
-        TypeProduit typeProduit = typeProduitService.findById(typeId);
+        TypeProduit typeProduit = typeProduitService.findById(typeId).get();
         List<Produit> produits = productService.findByTypeProduit(typeProduit);
         model.addAttribute("produits", produits);
         model.addAttribute("selectedType", typeProduit);
@@ -51,7 +51,7 @@ public class ProduitController {
     @PostMapping
     public String save(@ModelAttribute Produit produit, @RequestParam(required = false) Long typeProduitId){
         if(typeProduitId != null) {
-            TypeProduit typeProduit = typeProduitService.findById(typeProduitId);
+            TypeProduit typeProduit = typeProduitService.findById(typeProduitId).get();
             produit.setTypeProduit(typeProduit);
         }
         productService.save(produit);

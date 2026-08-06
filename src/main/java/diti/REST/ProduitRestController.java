@@ -34,7 +34,7 @@ public class ProduitRestController {
 
     @GetMapping("/type/{typeId}")
     public List<Produit> getListByType(@PathVariable Long typeId){
-        TypeProduit typeProduit = typeProduitService.findById(typeId);
+        TypeProduit typeProduit = typeProduitService.findById(typeId).get();
         return productService.findByTypeProduit(typeProduit);
     }
 

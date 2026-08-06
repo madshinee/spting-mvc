@@ -3,13 +3,14 @@ package diti.service;
 import diti.entity.TypeProduit;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TypeProduitService {
-    void save(TypeProduit typeProduit);
+    TypeProduit save(TypeProduit typeProduit);
 
     List<TypeProduit> findAll();
 
-    TypeProduit findById(Long id);
+    Optional<TypeProduit> findById(Long id);
 
     void delete(Long id);
 }
