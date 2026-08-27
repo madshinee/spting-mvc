@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Types de Produit</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { text-decoration: none; color: #0066cc; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Liste des Types de Produit</h1>
+    <a th:href="@{/type-produit/new}">Ajouter un type de produit</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Libelle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="type : ${types}">
+                <td th:text="${type.id}">1</td>
+                <td th:text="${type.libelle}">Libelle</td>
+                <td>
+                    <a th:href="@{/type-produit/edit/{id}(id=${type.id})}">Modifier</a>
+                    <form th:action="@{/type-produit/delete/{id}(id=${type.id})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce type ?');" />
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${typeProduit != null && typeProduit.id != null} ? 'Modifier un type de produit' : 'Ajouter un type de produit'">Ajouter un type de produit</title>
+    <style>
+        label { display: block; margin-top: 10px; }
+        input { padding: 5px; margin-top: 5px; width: 300px; }
+        button { margin-top: 15px; padding: 8px 15px; }
+    </style>
+</head>
+<body>
+    <h1 th:text="${typeProduit != null && typeProduit.id != null} ? 'Modifier un type de produit' : 'Ajouter un type de produit'">Ajouter un type de produit</h1>
+
+    <form th:action="@{/type-produit}" method="post">
+        <input type="hidden" th:value="${typeProduit != null ? typeProduit.id : null}" name="id" />
+
+        <label for="libelle">Libelle</label>
+        <input type="text" id="libelle" name="libelle" th:value="${typeProduit != null ? typeProduit.libelle : ''}" />
+
+        <button type="submit">Enregistrer</button>
+    </form>
+</body>
+</html>

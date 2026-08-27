@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${produit != null && produit.id != null} ? 'Modifier un produit' : 'Ajouter un produit'">Ajouter un produit</title>
+    <style>
+        label { display: block; margin-top: 10px; }
+        input, select { padding: 5px; margin-top: 5px; width: 300px; }
+        button { margin-top: 15px; padding: 8px 15px; }
+    </style>
+</head>
+<body>
+    <h1 th:text="${produit != null && produit.id != null} ? 'Modifier un produit' : 'Ajouter un produit'">Ajouter un produit</h1>
+
+    <form th:action="@{/produit}" method="post">
+        <input type="hidden" th:value="${produit != null ? produit.id : null}" name="id" />
+
+        <label for="libelle">Libelle</label>
+        <input type="text" id="libelle" name="libelle" th:value="${produit != null ? produit.libelle : ''}" />
+
+        <label for="prix">Prix</label>
+        <input type="number" id="prix" name="prix" th:value="${produit != null ? produit.prix : ''}" />
+
+        <label for="typeProduitId">Type Produit</label>
+        <select id="typeProduitId" name="typeProduitId">
+            <option th:each="type : ${types}" 
+                    th:value="${type.id}" 
+                    th:text="${type.libelle}"
+                    th:selected="${produit != null && produit.typeProduit != null && produit.typeProduit.id == type.id}">
+            </option>
+        </select>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+</body>
+</html>

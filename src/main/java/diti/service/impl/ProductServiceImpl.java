@@ -1,11 +1,16 @@
 package diti.service.impl;
 
 
+import diti.dto.ProduitDTO;
 import diti.entity.Produit;
 import diti.entity.TypeProduit;
+import diti.mapper.ProduitMapper;
 import diti.repository.ProductRepository;
 import diti.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository ;
+
+    @Autowired
+    private ProduitMapper produitMapper;
 
     @Override
     public Produit save(Produit product) {
@@ -41,5 +49,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Produit> findByTypeProduit(TypeProduit typeProduit) {
         return repository.findByTypeProduit(typeProduit);
+    }
+
+    @Override
+    public Page<ProduitDTO> getAllProduits(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable).map(produitMapper::toDTO);
     }
 }

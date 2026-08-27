@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .error { color: red; }
+        a { text-decoration: none; color: #0066cc; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Erreur</h1>
+    <p class="error" th:text="${errorMessage}">Message d'erreur</p>
+    <a th:href="@{/produit}">Retour à la liste des produits</a>
+</body>
+</html>

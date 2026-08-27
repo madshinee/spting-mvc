@@ -1,5 +1,16 @@
 target/
+src/main/resources/application.properties
+src/main/resources/application-docker.properties
 !.mvn/wrapper/maven-wrapper.jar
+
+# SmartTomcat (configuration d'exécution locale)
+.smarttomcat/
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
 !**/src/main/**/target/
 !**/src/test/**/target/
 

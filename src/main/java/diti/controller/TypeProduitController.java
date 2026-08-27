@@ -1,6 +1,7 @@
 package diti.controller;
 
 import diti.entity.TypeProduit;
+import diti.exception.ResourceNotFoundException;
 import diti.service.TypeProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,8 @@ public class TypeProduitController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        TypeProduit typeProduit = typeProduitService.findById(id).get();
+        TypeProduit typeProduit = typeProduitService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Aucun type de produit trouve avec l'id " + id));
         model.addAttribute("typeProduit", typeProduit);
         return "form-type-produit";
     }

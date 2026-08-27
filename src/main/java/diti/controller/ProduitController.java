@@ -3,6 +3,7 @@ package diti.controller;
 
 import diti.entity.Produit;
 import diti.entity.TypeProduit;
+import diti.exception.ResourceNotFoundException;
 import diti.service.ProductService;
 import diti.service.TypeProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class ProduitController {
     @Autowired
     private TypeProduitService typeProduitService;
 
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/produit";
+    }
 
     @GetMapping
     public String getList(Model model){
@@ -33,7 +38,8 @@ public class ProduitController {
 
     @GetMapping("/type/{typeId}")
     public String getListByType(@PathVariable Long typeId, Model model){
-        TypeProduit typeProduit = typeProduitService.findById(typeId).get();
+        TypeProduit typeProduit = typeProduitService.findById(typeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Aucun type de produit trouve avec l'id " + typeId));
         List<Produit> produits = productService.findByTypeProduit(typeProduit);
         model.addAttribute("produits", produits);
         model.addAttribute("selectedType", typeProduit);
@@ -51,7 +57,8 @@ public class ProduitController {
     @PostMapping
     public String save(@ModelAttribute Produit produit, @RequestParam(required = false) Long typeProduitId){
         if(typeProduitId != null) {
-            TypeProduit typeProduit = typeProduitService.findById(typeProduitId).get();
+            TypeProduit typeProduit = typeProduitService.findById(typeProduitId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Aucun type de produit trouve avec l'id " + typeProduitId));
             produit.setTypeProduit(typeProduit);
         }
         productService.save(produit);
@@ -68,7 +75,8 @@ public class ProduitController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        Produit produit =  productService.findById(id).get();
+        Produit produit =  productService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Aucun produit trouve avec l'id " + id));
         List<TypeProduit> types = typeProduitService.findAll();
         model.addAttribute("produit", produit);
         model.addAttribute("types", types);
@@ -77,4 +85,3 @@ public class ProduitController {
 
 
 }
-

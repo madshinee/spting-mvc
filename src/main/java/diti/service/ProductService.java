@@ -2,6 +2,7 @@ package diti.service;
 
 
 
+import diti.dto.ProduitDTO;
 import diti.entity.Produit;
 import diti.entity.TypeProduit;
 
@@ -19,4 +20,6 @@ public interface ProductService {
     void delete(Long id);
 
     List<Produit> findByTypeProduit(TypeProduit typeProduit);
+
+    org.springframework.data.domain.Page<ProduitDTO> getAllProduits(int page, int size);
 }

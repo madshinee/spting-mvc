@@ -15,7 +15,7 @@ public class Produit {
 
     private double prix;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_produit_id")
     private TypeProduit typeProduit;
 

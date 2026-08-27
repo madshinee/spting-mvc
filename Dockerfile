@@ -1,13 +1,24 @@
-FROM tomcat:11.0-jdk21
+FROM eclipse-temurin:17-jdk-jammy AS builder
 
-# Remove default Tomcat webapps
-RUN rm -rf /usr/local/tomcat/webapps/*
+WORKDIR /app
 
-# Copy the WAR file into Tomcat's webapps directory as ROOT.war
-COPY target/diti4_spring_mvc.war /usr/local/tomcat/webapps/ROOT.war
+COPY pom.xml .
+COPY .mvn .mvn
+COPY src src
 
-# Expose the default Tomcat port
+RUN apt-get update && apt-get install -y maven
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+RUN groupadd -r spring && useradd -r -g spring spring
+RUN chown -R spring:spring /app
+USER spring:spring
+
+COPY --from=builder /app/target/diti4_spring_mvc.jar app.jar
+
 EXPOSE 8080
 
-# Start Tomcat
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]
