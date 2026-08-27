@@ -3,7 +3,6 @@ FROM eclipse-temurin:17-jdk-jammy AS builder
 WORKDIR /app
 
 COPY pom.xml .
-COPY .mvn .mvn
 COPY src src
 
 RUN apt-get update && apt-get install -y maven
